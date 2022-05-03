@@ -1,0 +1,198 @@
+{
+    "version": "0.1.0",
+    "name": "crypton_solana_donation",
+    "instructions": [
+        {
+            "name": "initialize",
+            "accounts": [
+                {
+                    "name": "baseAccount",
+                    "isMut": true,
+                    "isSigner": false,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "arg",
+                                "type": "publicKey",
+                                "path": "owner"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "payer",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "owner",
+                    "type": "publicKey"
+                }
+            ]
+        },
+        {
+            "name": "doDonation",
+            "accounts": [
+                {
+                    "name": "donationBank",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "donationData",
+                    "isMut": true,
+                    "isSigner": false,
+                    "pda": {
+                        "seeds": [
+                            {
+                                "kind": "account",
+                                "type": "publicKey",
+                                "path": "donator"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "donator",
+                    "isMut": true,
+                    "isSigner": true
+                },
+                {
+                    "name": "systemProgram",
+                    "isMut": false,
+                    "isSigner": false
+                }
+            ],
+            "args": [
+                {
+                    "name": "amount",
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "withdraw",
+            "accounts": [
+                {
+                    "name": "donationBank",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "owner",
+                    "isMut": false,
+                    "isSigner": true
+                },
+                {
+                    "name": "destination",
+                    "isMut": true,
+                    "isSigner": false
+                },
+                {
+                    "name": "bank",
+                    "isMut": true,
+                    "isSigner": false
+                }
+            ],
+            "args": []
+        }
+    ],
+    "accounts": [
+        {
+            "name": "BaseAccount",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "owner",
+                        "type": "publicKey"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "DonationData",
+            "type": {
+                "kind": "struct",
+                "fields": [
+                    {
+                        "name": "donationBank",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "donator",
+                        "type": "publicKey"
+                    },
+                    {
+                        "name": "amount",
+                        "type": "u64"
+                    }
+                ]
+            }
+        }
+    ],
+    "events": [
+        {
+            "name": "DonationEvent",
+            "fields": [
+                {
+                    "name": "donationBank",
+                    "type": "publicKey",
+                    "index": false
+                },
+                {
+                    "name": "donator",
+                    "type": "publicKey",
+                    "index": false
+                },
+                {
+                    "name": "amount",
+                    "type": "u64",
+                    "index": false
+                }
+            ]
+        },
+        {
+            "name": "WithdrawEvent",
+            "fields": [
+                {
+                    "name": "donationBank",
+                    "type": "publicKey",
+                    "index": false
+                },
+                {
+                    "name": "destination",
+                    "type": "publicKey",
+                    "index": false
+                },
+                {
+                    "name": "amount",
+                    "type": "u64",
+                    "index": false
+                }
+            ]
+        }
+    ],
+    "errors": [
+        {
+            "code": 6000,
+            "name": "InvalidAmount",
+            "msg": "Amount should be more than zero!"
+        },
+        {
+            "code": 6001,
+            "name": "NoFundsForWithdrawal",
+            "msg": "The donation bank is empty"
+        }
+    ],
+    "metadata": {
+        "address": "42bUpNbzyBA4wPz3eFTRkhXq7odYdt9wv8jKeucS869p"
+    }
+}

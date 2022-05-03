@@ -1,0 +1,17 @@
+[features]
+seeds = true
+[programs.localnet]
+crypton_solana_donation = "42bUpNbzyBA4wPz3eFTRkhXq7odYdt9wv8jKeucS869p"
+
+[programs.devnet]
+crypton_solana_donation = "42bUpNbzyBA4wPz3eFTRkhXq7odYdt9wv8jKeucS869p"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "devnet"
+wallet = "/home/wubuntu/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
